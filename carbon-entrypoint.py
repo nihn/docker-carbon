@@ -40,6 +40,7 @@ user = environ['CARBON_USER']
 pidfile = argv[1] + '.pid'
 
 call(['chown', '-R', user, environ['WHISPER_DIR']])
+call(['rm', '~/%s' % pidfile])
 
 command = argv[1] + " --nodaemon --pidfile ~/%s start " % pidfile + \
           ' '.join(argv[2:])
