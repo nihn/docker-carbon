@@ -8,6 +8,7 @@ RUN apk update && apk add --no-cache\
     && pip install\
         carbon==0.9.15\
         whisper==0.9.15\
+        dumb-init\
     && apk del gcc musl-dev \
     && rm -rf /var/cache/apk/* /root/.cache/*
 
@@ -26,4 +27,4 @@ ONBUILD COPY *.conf $GRAPHITE_CONF_DIR/
 COPY carbon-entrypoint.py /carbon-entrypoint.py
 COPY storage-schemas.conf $GRAPHITE_CONF_DIR/storage-schemas.conf
 
-ENTRYPOINT ["/carbon-entrypoint.sh"]
+ENTRYPOINT ["dumb-init", "/carbon-entrypoint.sh"]
