@@ -6,8 +6,8 @@ RUN apk update && apk add --no-cache\
         gcc\
         musl-dev\
     && pip install\
-        carbon==0.9.15\
-        whisper==0.9.15\
+        carbon==0.9.16\
+        whisper==0.9.16\
         dumb-init\
     && apk del gcc musl-dev \
     && rm -rf /var/cache/apk/* /root/.cache/*
