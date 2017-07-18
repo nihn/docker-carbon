@@ -37,13 +37,16 @@ if len(argv) < 2 or argv[1] not in carbon_binaries:
     exit(1)
 
 user = environ['CARBON_USER']
+carbon_opts = environ['CARBON_OPTS']
+start_opts = ' '.join(argv[2:])
 pidfile = argv[1] + '.pid'
 
 call(['chown', '-R', user, environ['WHISPER_DIR']])
 call(['su', user, '-c', 'rm ~/%s' % pidfile])
 
-command = argv[1] + " --nodaemon --pidfile ~/%s start " % pidfile + \
-          ' '.join(argv[2:])
+command = "{binary} {carbon_opts} --nodaemon --pidfile ~/{pid} " \
+          "start {start_opts}".format(binary=argv[1], carbon_opts=carbon_opts,
+                                      pid=pidfile, start_opts=start_opts)
 
 logging.info('Running `%s` as %s user', command, user)
 exit(call(['su', user, '-c', command]))

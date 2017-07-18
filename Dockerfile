@@ -17,7 +17,8 @@ ENV PYTHONPATH=/usr/local/lib/python2.7/site-packages/opt/graphite/lib\
     GRAPHITE_CONF_DIR=/etc/carbon\
     GRAPHITE_STORAGE_DIR=/var/lib/carbon\
     WHISPER_DIR=/var/lib/carbon/whisper\
-    CARBON_USER=carbon
+    CARBON_USER=carbon\
+    CARBON_OPTS=""
 
 RUN mkdir -p $GRAPHITE_CONF_DIR $WHISPER_DIR\
     && adduser -Ss /bin/sh $CARBON_USER
