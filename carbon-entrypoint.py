@@ -17,11 +17,16 @@ def format_with_environment(path):
     """
     with open(path, 'r') as f:
         content = f.read()
-        new_content = content.format(**environ)
+
+    new_content = content.format(**environ)
+    for env, value in environ.items():
+        if env.startswith('CARBON_OPT_'):
+            new_content = '%s\n%s=%s' % (new_content, env[11:], value)
 
     if content != new_content:
         with open(path, 'w+') as f:
             f.write(new_content)
+
 
 configs = glob(path.join(environ['GRAPHITE_CONF_DIR'], '*.conf'))
 
