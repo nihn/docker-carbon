@@ -19,9 +19,11 @@ def format_with_environment(path):
         content = f.read()
 
     new_content = content.format(**environ)
-    for env, value in environ.items():
-        if env.startswith('CARBON_OPT_'):
-            new_content = '%s\n%s=%s' % (new_content, env[11:], value)
+    if path.endswith('carbon.conf'):
+        logging.info('Adding CARBON_OPT prefixed env to %s', path)
+        for env, value in environ.items():
+            if env.startswith('CARBON_OPT_'):
+                new_content = '%s\n%s=%s' % (new_content, env[11:], value)
 
     if content != new_content:
         with open(path, 'w+') as f:
